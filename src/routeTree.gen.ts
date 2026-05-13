@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LugaresRouteImport } from './routes/lugares'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EventosRouteImport } from './routes/eventos'
+import { Route as ClimaRouteImport } from './routes/clima'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LugaresIdRouteImport } from './routes/lugares.$id'
 
@@ -30,6 +31,11 @@ const EventosRoute = EventosRouteImport.update({
   path: '/eventos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClimaRoute = ClimaRouteImport.update({
+  id: '/clima',
+  path: '/clima',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,6 +49,7 @@ const LugaresIdRoute = LugaresIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clima': typeof ClimaRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/lugares': typeof LugaresRouteWithChildren
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clima': typeof ClimaRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/lugares': typeof LugaresRouteWithChildren
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/clima': typeof ClimaRoute
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/lugares': typeof LugaresRouteWithChildren
@@ -65,14 +74,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/eventos' | '/login' | '/lugares' | '/lugares/$id'
+  fullPaths:
+    | '/'
+    | '/clima'
+    | '/eventos'
+    | '/login'
+    | '/lugares'
+    | '/lugares/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/eventos' | '/login' | '/lugares' | '/lugares/$id'
-  id: '__root__' | '/' | '/eventos' | '/login' | '/lugares' | '/lugares/$id'
+  to: '/' | '/clima' | '/eventos' | '/login' | '/lugares' | '/lugares/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/clima'
+    | '/eventos'
+    | '/login'
+    | '/lugares'
+    | '/lugares/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ClimaRoute: typeof ClimaRoute
   EventosRoute: typeof EventosRoute
   LoginRoute: typeof LoginRoute
   LugaresRoute: typeof LugaresRouteWithChildren
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/eventos'
       fullPath: '/eventos'
       preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clima': {
+      id: '/clima'
+      path: '/clima'
+      fullPath: '/clima'
+      preLoaderRoute: typeof ClimaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -131,6 +161,7 @@ const LugaresRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ClimaRoute: ClimaRoute,
   EventosRoute: EventosRoute,
   LoginRoute: LoginRoute,
   LugaresRoute: LugaresRouteWithChildren,
