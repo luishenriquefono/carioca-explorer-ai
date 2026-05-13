@@ -14,7 +14,185 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      eventos: {
+        Row: {
+          categoria: string | null
+          created_at: string
+          data_evento: string | null
+          descricao: string | null
+          fonte_informacao: string | null
+          id: string
+          local: string | null
+          nome: string
+          preco: string | null
+        }
+        Insert: {
+          categoria?: string | null
+          created_at?: string
+          data_evento?: string | null
+          descricao?: string | null
+          fonte_informacao?: string | null
+          id?: string
+          local?: string | null
+          nome: string
+          preco?: string | null
+        }
+        Update: {
+          categoria?: string | null
+          created_at?: string
+          data_evento?: string | null
+          descricao?: string | null
+          fonte_informacao?: string | null
+          id?: string
+          local?: string | null
+          nome?: string
+          preco?: string | null
+        }
+        Relationships: []
+      }
+      favoritos: {
+        Row: {
+          created_at: string
+          id: string
+          lugar_id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lugar_id: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lugar_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "favoritos_lugar_id_fkey"
+            columns: ["lugar_id"]
+            isOneToOne: false
+            referencedRelation: "lugares"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      historico_consultas: {
+        Row: {
+          created_at: string
+          id: string
+          pergunta: string
+          resposta: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          pergunta: string
+          resposta?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          pergunta?: string
+          resposta?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      lugares: {
+        Row: {
+          bairro: string | null
+          categoria: string
+          created_at: string
+          descricao: string | null
+          endereco: string | null
+          faixa_preco: string | null
+          fonte_informacao: string | null
+          horario_funcionamento: string | null
+          id: string
+          imagem_url: string | null
+          nome: string
+        }
+        Insert: {
+          bairro?: string | null
+          categoria: string
+          created_at?: string
+          descricao?: string | null
+          endereco?: string | null
+          faixa_preco?: string | null
+          fonte_informacao?: string | null
+          horario_funcionamento?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome: string
+        }
+        Update: {
+          bairro?: string | null
+          categoria?: string
+          created_at?: string
+          descricao?: string | null
+          endereco?: string | null
+          faixa_preco?: string | null
+          fonte_informacao?: string | null
+          horario_funcionamento?: string | null
+          id?: string
+          imagem_url?: string | null
+          nome?: string
+        }
+        Relationships: []
+      }
+      roteiros: {
+        Row: {
+          created_at: string
+          id: string
+          preferencias_usuario: Json | null
+          resposta_ia: string | null
+          titulo: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          preferencias_usuario?: Json | null
+          resposta_ia?: string | null
+          titulo: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          preferencias_usuario?: Json | null
+          resposta_ia?: string | null
+          titulo?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      users_profile: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nome?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
