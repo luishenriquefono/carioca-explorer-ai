@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RoteiroRouteImport } from './routes/roteiro'
 import { Route as LugaresRouteImport } from './routes/lugares'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as EventosRouteImport } from './routes/eventos'
@@ -16,6 +17,11 @@ import { Route as ClimaRouteImport } from './routes/clima'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LugaresIdRouteImport } from './routes/lugares.$id'
 
+const RoteiroRoute = RoteiroRouteImport.update({
+  id: '/roteiro',
+  path: '/roteiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LugaresRoute = LugaresRouteImport.update({
   id: '/lugares',
   path: '/lugares',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/lugares': typeof LugaresRouteWithChildren
+  '/roteiro': typeof RoteiroRoute
   '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/lugares': typeof LugaresRouteWithChildren
+  '/roteiro': typeof RoteiroRoute
   '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/eventos': typeof EventosRoute
   '/login': typeof LoginRoute
   '/lugares': typeof LugaresRouteWithChildren
+  '/roteiro': typeof RoteiroRoute
   '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRouteTypes {
@@ -80,9 +89,17 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/lugares'
+    | '/roteiro'
     | '/lugares/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clima' | '/eventos' | '/login' | '/lugares' | '/lugares/$id'
+  to:
+    | '/'
+    | '/clima'
+    | '/eventos'
+    | '/login'
+    | '/lugares'
+    | '/roteiro'
+    | '/lugares/$id'
   id:
     | '__root__'
     | '/'
@@ -90,6 +107,7 @@ export interface FileRouteTypes {
     | '/eventos'
     | '/login'
     | '/lugares'
+    | '/roteiro'
     | '/lugares/$id'
   fileRoutesById: FileRoutesById
 }
@@ -99,10 +117,18 @@ export interface RootRouteChildren {
   EventosRoute: typeof EventosRoute
   LoginRoute: typeof LoginRoute
   LugaresRoute: typeof LugaresRouteWithChildren
+  RoteiroRoute: typeof RoteiroRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/roteiro': {
+      id: '/roteiro'
+      path: '/roteiro'
+      fullPath: '/roteiro'
+      preLoaderRoute: typeof RoteiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lugares': {
       id: '/lugares'
       path: '/lugares'
@@ -165,6 +191,7 @@ const rootRouteChildren: RootRouteChildren = {
   EventosRoute: EventosRoute,
   LoginRoute: LoginRoute,
   LugaresRoute: LugaresRouteWithChildren,
+  RoteiroRoute: RoteiroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
