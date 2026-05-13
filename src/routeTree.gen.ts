@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LugaresRouteImport } from './routes/lugares'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LugaresIdRouteImport } from './routes/lugares.$id'
 
 const LugaresRoute = LugaresRouteImport.update({
   id: '/lugares',
@@ -28,35 +29,43 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LugaresIdRoute = LugaresIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => LugaresRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/lugares': typeof LugaresRoute
+  '/lugares': typeof LugaresRouteWithChildren
+  '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/lugares': typeof LugaresRoute
+  '/lugares': typeof LugaresRouteWithChildren
+  '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/lugares': typeof LugaresRoute
+  '/lugares': typeof LugaresRouteWithChildren
+  '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/lugares'
+  fullPaths: '/' | '/login' | '/lugares' | '/lugares/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/lugares'
-  id: '__root__' | '/' | '/login' | '/lugares'
+  to: '/' | '/login' | '/lugares' | '/lugares/$id'
+  id: '__root__' | '/' | '/login' | '/lugares' | '/lugares/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
-  LugaresRoute: typeof LugaresRoute
+  LugaresRoute: typeof LugaresRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -82,13 +91,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lugares/$id': {
+      id: '/lugares/$id'
+      path: '/$id'
+      fullPath: '/lugares/$id'
+      preLoaderRoute: typeof LugaresIdRouteImport
+      parentRoute: typeof LugaresRoute
+    }
   }
 }
+
+interface LugaresRouteChildren {
+  LugaresIdRoute: typeof LugaresIdRoute
+}
+
+const LugaresRouteChildren: LugaresRouteChildren = {
+  LugaresIdRoute: LugaresIdRoute,
+}
+
+const LugaresRouteWithChildren =
+  LugaresRoute._addFileChildren(LugaresRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
-  LugaresRoute: LugaresRoute,
+  LugaresRoute: LugaresRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
