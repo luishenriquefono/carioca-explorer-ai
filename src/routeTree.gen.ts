@@ -9,38 +9,253 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrilhasRouteImport } from './routes/trilhas'
+import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as RoteiroRouteImport } from './routes/roteiro'
+import { Route as PraiasRouteImport } from './routes/praias'
+import { Route as LugaresRouteImport } from './routes/lugares'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as EventosRouteImport } from './routes/eventos'
+import { Route as ClimaRouteImport } from './routes/clima'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as LugaresIdRouteImport } from './routes/lugares.$id'
+import { Route as AuthenticatedHistoricoRouteImport } from './routes/_authenticated.historico'
+import { Route as AuthenticatedFavoritosRouteImport } from './routes/_authenticated.favoritos'
 
+const TrilhasRoute = TrilhasRouteImport.update({
+  id: '/trilhas',
+  path: '/trilhas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoteiroRoute = RoteiroRouteImport.update({
+  id: '/roteiro',
+  path: '/roteiro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PraiasRoute = PraiasRouteImport.update({
+  id: '/praias',
+  path: '/praias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LugaresRoute = LugaresRouteImport.update({
+  id: '/lugares',
+  path: '/lugares',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClimaRoute = ClimaRouteImport.update({
+  id: '/clima',
+  path: '/clima',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LugaresIdRoute = LugaresIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => LugaresRoute,
+} as any)
+const AuthenticatedHistoricoRoute = AuthenticatedHistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedFavoritosRoute = AuthenticatedFavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/clima': typeof ClimaRoute
+  '/eventos': typeof EventosRoute
+  '/login': typeof LoginRoute
+  '/lugares': typeof LugaresRouteWithChildren
+  '/praias': typeof PraiasRoute
+  '/roteiro': typeof RoteiroRoute
+  '/sobre': typeof SobreRoute
+  '/trilhas': typeof TrilhasRoute
+  '/favoritos': typeof AuthenticatedFavoritosRoute
+  '/historico': typeof AuthenticatedHistoricoRoute
+  '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/clima': typeof ClimaRoute
+  '/eventos': typeof EventosRoute
+  '/login': typeof LoginRoute
+  '/lugares': typeof LugaresRouteWithChildren
+  '/praias': typeof PraiasRoute
+  '/roteiro': typeof RoteiroRoute
+  '/sobre': typeof SobreRoute
+  '/trilhas': typeof TrilhasRoute
+  '/favoritos': typeof AuthenticatedFavoritosRoute
+  '/historico': typeof AuthenticatedHistoricoRoute
+  '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/clima': typeof ClimaRoute
+  '/eventos': typeof EventosRoute
+  '/login': typeof LoginRoute
+  '/lugares': typeof LugaresRouteWithChildren
+  '/praias': typeof PraiasRoute
+  '/roteiro': typeof RoteiroRoute
+  '/sobre': typeof SobreRoute
+  '/trilhas': typeof TrilhasRoute
+  '/_authenticated/favoritos': typeof AuthenticatedFavoritosRoute
+  '/_authenticated/historico': typeof AuthenticatedHistoricoRoute
+  '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/clima'
+    | '/eventos'
+    | '/login'
+    | '/lugares'
+    | '/praias'
+    | '/roteiro'
+    | '/sobre'
+    | '/trilhas'
+    | '/favoritos'
+    | '/historico'
+    | '/lugares/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/clima'
+    | '/eventos'
+    | '/login'
+    | '/lugares'
+    | '/praias'
+    | '/roteiro'
+    | '/sobre'
+    | '/trilhas'
+    | '/favoritos'
+    | '/historico'
+    | '/lugares/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/clima'
+    | '/eventos'
+    | '/login'
+    | '/lugares'
+    | '/praias'
+    | '/roteiro'
+    | '/sobre'
+    | '/trilhas'
+    | '/_authenticated/favoritos'
+    | '/_authenticated/historico'
+    | '/lugares/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  ClimaRoute: typeof ClimaRoute
+  EventosRoute: typeof EventosRoute
+  LoginRoute: typeof LoginRoute
+  LugaresRoute: typeof LugaresRouteWithChildren
+  PraiasRoute: typeof PraiasRoute
+  RoteiroRoute: typeof RoteiroRoute
+  SobreRoute: typeof SobreRoute
+  TrilhasRoute: typeof TrilhasRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trilhas': {
+      id: '/trilhas'
+      path: '/trilhas'
+      fullPath: '/trilhas'
+      preLoaderRoute: typeof TrilhasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roteiro': {
+      id: '/roteiro'
+      path: '/roteiro'
+      fullPath: '/roteiro'
+      preLoaderRoute: typeof RoteiroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/praias': {
+      id: '/praias'
+      path: '/praias'
+      fullPath: '/praias'
+      preLoaderRoute: typeof PraiasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lugares': {
+      id: '/lugares'
+      path: '/lugares'
+      fullPath: '/lugares'
+      preLoaderRoute: typeof LugaresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clima': {
+      id: '/clima'
+      path: '/clima'
+      fullPath: '/clima'
+      preLoaderRoute: typeof ClimaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +263,66 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lugares/$id': {
+      id: '/lugares/$id'
+      path: '/$id'
+      fullPath: '/lugares/$id'
+      preLoaderRoute: typeof LugaresIdRouteImport
+      parentRoute: typeof LugaresRoute
+    }
+    '/_authenticated/historico': {
+      id: '/_authenticated/historico'
+      path: '/historico'
+      fullPath: '/historico'
+      preLoaderRoute: typeof AuthenticatedHistoricoRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/favoritos': {
+      id: '/_authenticated/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof AuthenticatedFavoritosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedFavoritosRoute: typeof AuthenticatedFavoritosRoute
+  AuthenticatedHistoricoRoute: typeof AuthenticatedHistoricoRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedFavoritosRoute: AuthenticatedFavoritosRoute,
+  AuthenticatedHistoricoRoute: AuthenticatedHistoricoRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
+interface LugaresRouteChildren {
+  LugaresIdRoute: typeof LugaresIdRoute
+}
+
+const LugaresRouteChildren: LugaresRouteChildren = {
+  LugaresIdRoute: LugaresIdRoute,
+}
+
+const LugaresRouteWithChildren =
+  LugaresRoute._addFileChildren(LugaresRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  ClimaRoute: ClimaRoute,
+  EventosRoute: EventosRoute,
+  LoginRoute: LoginRoute,
+  LugaresRoute: LugaresRouteWithChildren,
+  PraiasRoute: PraiasRoute,
+  RoteiroRoute: RoteiroRoute,
+  SobreRoute: SobreRoute,
+  TrilhasRoute: TrilhasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
