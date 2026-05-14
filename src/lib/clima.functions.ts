@@ -24,12 +24,16 @@ export const obterClima = createServerFn({ method: "GET" }).handler(
       };
     }
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=Rio%20de%20Janeiro,BR&units=metric&lang=pt_br&appid=${key}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?lat=-22.9068&lon=-43.1729&units=metric&lang=pt_br&appid=${key}`;
       const controller = new AbortController();
       const t = setTimeout(() => controller.abort(), 10_000);
       const res = await fetch(url, { signal: controller.signal });
       clearTimeout(t);
-      if (!res.ok) throw new Error("api error");
+      if (!res.ok) {
+        const body = await res.text().catch(() => "");
+        console.error("[obterClima] OpenWeather API error", res.status, body);
+        throw new Error(`api error ${res.status}`);
+      }
       const data = (await res.json()) as {
         name: string;
         main: { temp: number; feels_like: number; humidity: number };
