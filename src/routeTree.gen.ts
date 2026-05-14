@@ -20,7 +20,6 @@ import { Route as ClimaRouteImport } from './routes/clima'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LugaresIdRouteImport } from './routes/lugares.$id'
-import { Route as ApiDebugClimaRouteImport } from './routes/api.debug-clima'
 import { Route as AuthenticatedHistoricoRouteImport } from './routes/_authenticated.historico'
 import { Route as AuthenticatedFavoritosRouteImport } from './routes/_authenticated.favoritos'
 
@@ -78,11 +77,6 @@ const LugaresIdRoute = LugaresIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => LugaresRoute,
 } as any)
-const ApiDebugClimaRoute = ApiDebugClimaRouteImport.update({
-  id: '/api/debug-clima',
-  path: '/api/debug-clima',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedHistoricoRoute = AuthenticatedHistoricoRouteImport.update({
   id: '/historico',
   path: '/historico',
@@ -106,7 +100,6 @@ export interface FileRoutesByFullPath {
   '/trilhas': typeof TrilhasRoute
   '/favoritos': typeof AuthenticatedFavoritosRoute
   '/historico': typeof AuthenticatedHistoricoRoute
-  '/api/debug-clima': typeof ApiDebugClimaRoute
   '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesByTo {
@@ -121,7 +114,6 @@ export interface FileRoutesByTo {
   '/trilhas': typeof TrilhasRoute
   '/favoritos': typeof AuthenticatedFavoritosRoute
   '/historico': typeof AuthenticatedHistoricoRoute
-  '/api/debug-clima': typeof ApiDebugClimaRoute
   '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRoutesById {
@@ -138,7 +130,6 @@ export interface FileRoutesById {
   '/trilhas': typeof TrilhasRoute
   '/_authenticated/favoritos': typeof AuthenticatedFavoritosRoute
   '/_authenticated/historico': typeof AuthenticatedHistoricoRoute
-  '/api/debug-clima': typeof ApiDebugClimaRoute
   '/lugares/$id': typeof LugaresIdRoute
 }
 export interface FileRouteTypes {
@@ -155,7 +146,6 @@ export interface FileRouteTypes {
     | '/trilhas'
     | '/favoritos'
     | '/historico'
-    | '/api/debug-clima'
     | '/lugares/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -170,7 +160,6 @@ export interface FileRouteTypes {
     | '/trilhas'
     | '/favoritos'
     | '/historico'
-    | '/api/debug-clima'
     | '/lugares/$id'
   id:
     | '__root__'
@@ -186,7 +175,6 @@ export interface FileRouteTypes {
     | '/trilhas'
     | '/_authenticated/favoritos'
     | '/_authenticated/historico'
-    | '/api/debug-clima'
     | '/lugares/$id'
   fileRoutesById: FileRoutesById
 }
@@ -201,7 +189,6 @@ export interface RootRouteChildren {
   RoteiroRoute: typeof RoteiroRoute
   SobreRoute: typeof SobreRoute
   TrilhasRoute: typeof TrilhasRoute
-  ApiDebugClimaRoute: typeof ApiDebugClimaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -283,13 +270,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LugaresIdRouteImport
       parentRoute: typeof LugaresRoute
     }
-    '/api/debug-clima': {
-      id: '/api/debug-clima'
-      path: '/api/debug-clima'
-      fullPath: '/api/debug-clima'
-      preLoaderRoute: typeof ApiDebugClimaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_authenticated/historico': {
       id: '/_authenticated/historico'
       path: '/historico'
@@ -343,8 +323,17 @@ const rootRouteChildren: RootRouteChildren = {
   RoteiroRoute: RoteiroRoute,
   SobreRoute: SobreRoute,
   TrilhasRoute: TrilhasRoute,
-  ApiDebugClimaRoute: ApiDebugClimaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

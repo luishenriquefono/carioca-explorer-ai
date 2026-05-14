@@ -32,6 +32,13 @@ export const obterClima = createServerFn({ method: "GET" }).handler(
       if (!res.ok) {
         const body = await res.text().catch(() => "");
         console.error("[obterClima] OpenWeather API error", res.status, body);
+        if (res.status === 401) {
+          return {
+            ok: false,
+            error:
+              "Chave da API OpenWeather inválida ou ainda não ativada. Novas chaves podem levar até algumas horas para começar a funcionar.",
+          };
+        }
         throw new Error(`api error ${res.status}`);
       }
       const data = (await res.json()) as {
