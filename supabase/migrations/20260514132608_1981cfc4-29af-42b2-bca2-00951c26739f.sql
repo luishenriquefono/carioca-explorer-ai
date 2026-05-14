@@ -1,0 +1,1 @@
+UPDATE public.lugares SET imagem_url = 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800' WHERE nome = 'Praia da Barra da Tijuca';
