@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { MapPin } from "lucide-react";
+import { FavoriteButton } from "./FavoriteButton";
 
 export type Lugar = {
   id: string;
@@ -16,8 +17,9 @@ export function PlaceCard({ lugar }: { lugar: Lugar }) {
     <Link
       to="/lugares/$id"
       params={{ id: lugar.id }}
-      className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
+      className="group relative overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-soft)]"
     >
+      <FavoriteButton lugarId={lugar.id} />
       <div className="aspect-[4/3] overflow-hidden bg-muted">
         {lugar.imagem_url ? (
           <img
