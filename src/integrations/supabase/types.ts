@@ -53,23 +53,33 @@ export type Database = {
       favoritos: {
         Row: {
           created_at: string
+          evento_id: string | null
           id: string
-          lugar_id: string
+          lugar_id: string | null
           user_id: string
         }
         Insert: {
           created_at?: string
+          evento_id?: string | null
           id?: string
-          lugar_id: string
+          lugar_id?: string | null
           user_id: string
         }
         Update: {
           created_at?: string
+          evento_id?: string | null
           id?: string
-          lugar_id?: string
+          lugar_id?: string | null
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "favoritos_evento_id_fkey"
+            columns: ["evento_id"]
+            isOneToOne: false
+            referencedRelation: "eventos"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "favoritos_lugar_id_fkey"
             columns: ["lugar_id"]
