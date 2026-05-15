@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { PageHeader } from "@/components/PageHeader";
 import { Calendar, MapPin } from "lucide-react";
+import { FavoriteButton } from "@/components/FavoriteButton";
 
 export const Route = createFileRoute("/eventos")({ component: Eventos });
 
@@ -37,8 +38,13 @@ function Eventos() {
         <div className="grid gap-4 md:grid-cols-2">
           {data?.map((e) => (
             <article key={e.id} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
-              <p className="text-xs font-medium uppercase tracking-wide text-secondary">{e.categoria}</p>
-              <h3 className="mt-1 text-lg font-semibold">{e.nome}</h3>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wide text-secondary">{e.categoria}</p>
+                  <h3 className="mt-1 text-lg font-semibold">{e.nome}</h3>
+                </div>
+                <FavoriteButton eventoId={e.id} variant="inline" />
+              </div>
               {e.descricao && <p className="mt-2 text-sm text-muted-foreground">{e.descricao}</p>}
               <div className="mt-3 grid gap-1 text-sm text-muted-foreground">
                 {e.data_evento && (
