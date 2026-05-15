@@ -32,3 +32,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# opção recomendada: git-filter-repo
+pip install git-filter-repo
+git filter-repo --path .env --invert-paths --force
+git push origin --force --all
+git push origin --force --tags
